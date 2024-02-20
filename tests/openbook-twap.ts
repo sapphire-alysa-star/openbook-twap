@@ -151,26 +151,26 @@
 
 //     const NUM_ORDERS = 96;
 
-//     for (let i = 0; i < Math.floor(NUM_ORDERS / 24); i++) {
-//       let openOrders = await openbook.createOpenOrders(
-//         market,
-//         new BN(i + 1),
-//         `oo${i}`
-//       );
-//       oos.push(openOrders);
-//       console.log(`Created oo${i}`);
-//       await openbook.deposit(
-//         oos[i],
-//         await openbook.getOpenOrders(oos[i]),
-//         storedMarket,
-//         metaAccount,
-//         usdcAccount,
-//         new BN(META_AMOUNT),
-//         new BN(USDC_AMOUNT)
-//       );
+    // for (let i = 0; i < Math.floor(NUM_ORDERS / 24); i++) {
+    //   let openOrders = await openbook.createOpenOrders(
+    //     market,
+    //     new BN(i + 1),
+    //     `oo${i}`
+    //   );
+    //   oos.push(openOrders);
+    //   console.log(`Created oo${i}`);
+    //   await openbook.deposit(
+    //     oos[i],
+    //     await openbook.getOpenOrders(oos[i]),
+    //     storedMarket,
+    //     metaAccount,
+    //     usdcAccount,
+    //     new BN(META_AMOUNT),
+    //     new BN(USDC_AMOUNT)
+    //   );
 
-//       console.log(`Deposited to oo${i}`);
-//     }
+    //   console.log(`Deposited to oo${i}`);
+    // }
 
 //     let buyArgs: PlaceOrderArgs = {
 //       side: Side.Bid,

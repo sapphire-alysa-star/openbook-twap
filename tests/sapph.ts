@@ -33,8 +33,8 @@ const OPENBOOK_PROGRAM_ID = new PublicKey(
   "opnb2LAfJYbRMAHHvqjCwQxanZn7ReEHp1k81EohpZb"
 );
 
-const META_AMOUNT = 100n * 1_000_000_000n;
-const USDC_AMOUNT = 1000n * 1_000_000n;
+const META_AMOUNT = 100 * 1000000000;
+const USDC_AMOUNT = 1000 * 1000000;
 
 describe("openbook-twap", () => {
     const provider = anchor.AnchorProvider.env();
@@ -85,7 +85,7 @@ describe("openbook-twap", () => {
         META,
         metaAccount,
         mintAuthority,
-        META_AMOUNT * 50n
+        META_AMOUNT * 50
       );
   
       await mintTo(
@@ -94,7 +94,7 @@ describe("openbook-twap", () => {
         USDC,
         usdcAccount,
         mintAuthority,
-        USDC_AMOUNT * 50n
+        USDC_AMOUNT * 50
       );
   
       let marketKP = Keypair.generate();
@@ -143,5 +143,27 @@ describe("openbook-twap", () => {
       let storedMarket = await openbook.getMarket(market);
   
       let oos = [];
+
+      for (let i = 0; i < 5; i++) {
+        let openOrders = await openbook.createOpenOrders(
+          market,
+          new BN(i + 1),
+          `oo${i}`
+        );
+        oos.push(openOrders);
+        console.log(`Created oo${i}`);
+        await openbook.deposit(
+          oos[i],
+          await openbook.getOpenOrders(oos[i]),
+          storedMarket,
+          metaAccount,
+          usdcAccount,
+          new BN(META_AMOUNT),
+          new BN(USDC_AMOUNT)
+        );
+  
+        console.log(`Deposited to oo${i}`);
+      }
+  
     })
 })
