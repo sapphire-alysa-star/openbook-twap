@@ -33,8 +33,8 @@ const OPENBOOK_PROGRAM_ID = new PublicKey(
   "opnb2LAfJYbRMAHHvqjCwQxanZn7ReEHp1k81EohpZb"
 );
 
-const META_AMOUNT = 100 * 1000000000;
-const USDC_AMOUNT = 1000 * 1000000;
+const META_UNIT = 10e9; // 9 digits
+const USDC_UNIT = 10e6; // 6 digits
 
 describe("openbook-twap", () => {
     const provider = anchor.AnchorProvider.env();
@@ -54,7 +54,7 @@ describe("openbook-twap", () => {
         payer,
         mintAuthority.publicKey,
         null,
-        6
+        9
       );
   
       let USDC = await createMint(
@@ -85,8 +85,8 @@ describe("openbook-twap", () => {
         META,
         metaAccount,
         mintAuthority,
-        META_AMOUNT * 50
-      );
+        META_UNIT * 50
+      ); // mint 100 meta
   
       await mintTo(
         connection,
@@ -94,8 +94,8 @@ describe("openbook-twap", () => {
         USDC,
         usdcAccount,
         mintAuthority,
-        USDC_AMOUNT * 50
-      );
+        USDC_UNIT * 10e8
+      ); // 100K usdc
   
       let marketKP = Keypair.generate();
   
@@ -127,7 +127,7 @@ describe("openbook-twap", () => {
       );
   
       await openbookTwap.methods
-        .createTwapMarket(new BN(550))
+        .createTwapMarket(new BN(10e6)) // initial value of 1 usdc. 6 decimals
         .accounts({
           market,
           twapMarket,
@@ -158,8 +158,8 @@ describe("openbook-twap", () => {
           storedMarket,
           metaAccount,
           usdcAccount,
-          new BN(META_AMOUNT),
-          new BN(USDC_AMOUNT)
+          new BN(META_UNIT),
+          new BN(USDC_UNIT)
         );
   
         console.log(`Deposited to oo${i}`);
