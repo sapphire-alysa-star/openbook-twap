@@ -14,9 +14,13 @@ export PATH="/home/codespace/.local/share/solana/install/active_release/bin:$PAT
 
 cargo install --git https://github.com/coral-xyz/anchor avm --locked --force === anchor
 
-avm install latest
+avm install latest - not sure about this /home/codespace/.avm/bin add to path
 
 anchor build
+
+solana-keygen new
+
+anchor test
 
 ## Oracle
 
