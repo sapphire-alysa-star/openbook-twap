@@ -1,8 +1,22 @@
-# OpenBook TWAP
+# Scripts to Run
 
-![License LGPLv2.1](https://img.shields.io/badge/License-LGPLv2.1-violet.svg)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-A program that allows you to fetch on-chain TWAPs from OpenBook V2 markets.
+(restart terminal)
+
+rustup install nightly
+
+cargo build === had to manually clear a bunch of zero copy errors but ok whatever
+
+sh -c "$(curl -sSfL https://release.solana.com/v1.18.2/install)" === solana installer
+
+export PATH="/home/codespace/.local/share/solana/install/active_release/bin:$PATH"
+
+cargo install --git https://github.com/coral-xyz/anchor avm --locked --force === anchor
+
+avm install latest
+
+anchor build
 
 ## Oracle
 
