@@ -163,6 +163,38 @@ describe("openbook-twap", () => {
         );
   
         console.log(`Deposited to oo${i}`);
+
+        let buyArgs: PlaceOrderArgs = {
+            side: Side.Bid,
+            priceLots: new BN(500), // 1 META for 1 USDC
+            maxBaseLots: new BN(1),
+            maxQuoteLotsIncludingFees: new BN(500),
+            clientOrderId: new BN(1),
+            orderType: OrderType.Limit,
+            expiryTimestamp: new BN(0),
+            selfTradeBehavior: SelfTradeBehavior.DecrementTake,
+            limit: 255,
+        };
+
+        for (let order of oos) {
+            await openbookTwap.methods
+            .placeOrder(buyArgs)
+            .accounts({
+              signer: payer.publicKey,
+              asks: storedMarket.asks,
+              bids: storedMarket.bids,
+              marketVault: storedMarket.marketQuoteVault, // marketQuoteVault is USDC
+              eventHeap: storedMarket.eventHeap,
+              market,
+              openOrdersAccount: order,
+              userTokenAccount: usdcAccount,
+              tokenProgram: TOKEN_PROGRAM_ID,
+              twapMarket,
+              openbookProgram: OPENBOOK_PROGRAM_ID,
+            })
+            .rpc();
+        }
+
       }
   
     })
